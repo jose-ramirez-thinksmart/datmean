@@ -1,5 +1,5 @@
 <?php
-define("API","http://localhost/api2/api/public/api/v1/");
+define("API","http://localhost/datmean/api/public/api/v1/");
 
 // Inclusión de TWIG
 require_once './vendor/autoload.php';
