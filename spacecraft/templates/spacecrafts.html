@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+  <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+  <title>PROTOCOLO DE EMEGENCIA REBELDE 2.1.3</title>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Flota Rebelde</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <button class="btn btn-outline-success" type="button" id="btnNew" data-toggle="modal" data-target="#modalRegister">Registrar nueva nave espacial</button>
+      </li>
+      
+    </ul>
+    
+    <ul class="nav justify-content-end">
+    	<li>
+	    	<form class="form-inline my-2 my-lg-0">
+		      <input class="form-control mr-sm-2" type="search" placeholder="Recuperar coordenadas" aria-label="Buscar nave espacial" name="search">
+		      <button class="btn btn-outline-success my-2 my-sm-0" type="button" id="btnSearch">Buscar</button>
+		    </form>
+    	</li>
+    	&nbsp;
+    	<li class="nav-item">
+        	<button class="btn btn-outline-success" type="button" id="btnExit">Salir</button>
+      	</li>
+    </ul>
+  </div>
+</nav>
+<br>
+		<div class="card" style="width:90%;left:5%;">
+			<div class="card-body">
+			  <table class="table table-striped table-hover">
+				  <thead>
+				    <tr>
+				      <th scope="col">#</th>
+				      <th scope="col">Nombre</th>
+				      <th scope="col">Tipo</th>
+				      <th scope="col">Coordenada x</th>
+				      <th scope="col">Coordenada y</th>
+				      <th scope="col">Coordenada z</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  	{% for nave in naves %}
+				    <tr>
+				      <th scope="row">{{ loop.index }}</th>
+				      <td>{{ nave.name }}</td>
+				      <td>{{ nave.ds_type }}</td>
+				      <td>{{ nave.x }}</td>
+				      <td>{{ nave.y }}</td>
+				      <td>{{ nave.z }}</td>
+				    </tr>
+				    {% endfor %}
+				  </tbody>
+				</table>
+			</div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="modalRegister">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Registro de naves espaciales</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <form id="spaceshipForm">
+		  <div class="form-group">
+		    <label for="nameShip">Nombre</label>
+		    <input type="text" class="form-control" name="nameShip" placeholder="Halcón Milenario" required>
+		  </div>
+		  <div class="form-group">
+		    <label for="exampleFormControlSelect1">Tipo de nave espacial</label>
+		    <select class="form-control" name="typeShip" required>
+		        {% for type in typeShips %}
+		        <option value="{{ type.id }}">{{ type.ds_type }}</option>
+		        {% endfor %}
+	        </select>
+		  </div>
+		  <div class="row">
+		    <div class="col">
+		      <input type="text" name="x" class="form-control" placeholder="Coordenadas x" required>
+		    </div>
+		    <div class="col">
+		      <input type="text" name="y" class="form-control" placeholder="Coordenadas y" required>
+		    </div>
+		    <div class="col">
+		      <input type="text" name="z" class="form-control" placeholder="Coordenadas z" required>
+		    </div>
+		  </div>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="btnRegister">Registrar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal" tabindex="-1" role="dialog" id="modalCoordenadas">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Naves encontradas</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<p id="x"></p>
+      	<p id="y"></p>
+      	<p id="z"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script src="js/main.js"></script>
+
+</html>
